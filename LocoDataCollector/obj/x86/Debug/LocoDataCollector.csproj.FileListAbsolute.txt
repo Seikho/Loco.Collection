@@ -1,0 +1,28 @@
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\LocoDataCollector.Form1.resources
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\LocoDataCollector.Properties.Resources.resources
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\bin\Debug\LocoDataCollector.exe.config
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\bin\Debug\LocoDataCollector.exe
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\bin\Debug\LocoDataCollector.pdb
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\LocoDataCollector.exe
+c:\users\seikho\documents\visual studio 2010\Projects\LocoDataCollector\LocoDataCollector\obj\x86\Debug\LocoDataCollector.pdb
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\bin\Debug\LocoDataCollector.exe.config
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\obj\x86\Debug\LocoDataCollector.exe
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\obj\x86\Debug\LocoDataCollector.pdb
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\bin\Debug\LocoDataCollector.exe
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\bin\Debug\LocoDataCollector.pdb
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\obj\x86\Debug\LocoDataCollector.csprojResolveAssemblyReference.cache
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\obj\x86\Debug\LocoDataCollector.Form1.resources
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\obj\x86\Debug\LocoDataCollector.Properties.Resources.resources
+C:\Users\Seikho\Documents\Visual Studio 2012\Projects\LocoDataCollector\obj\x86\Debug\LocoDataCollector.csproj.GenerateResource.Cache
+C:\Files\LocoTools\Source\LocoDataCollector\bin\Debug\LocoDataCollector.exe.config
+C:\Files\LocoTools\Source\LocoDataCollector\obj\x86\Debug\LocoDataCollector.exe
+C:\Files\LocoTools\Source\LocoDataCollector\obj\x86\Debug\LocoDataCollector.pdb
+C:\Files\LocoTools\Source\LocoDataCollector\bin\Debug\LocoDataCollector.exe
+C:\Files\LocoTools\Source\LocoDataCollector\bin\Debug\LocoDataCollector.pdb
+C:\Files\LocoTools\Source\LocoDataCollector\obj\x86\Debug\LocoDataCollector.csprojResolveAssemblyReference.cache
+C:\Files\LocoTools\Source\LocoDataCollector\obj\x86\Debug\LocoDataCollector.Form1.resources
+C:\Files\LocoTools\Source\LocoDataCollector\obj\x86\Debug\LocoDataCollector.Properties.Resources.resources
+C:\Files\LocoTools\Source\LocoDataCollector\obj\x86\Debug\LocoDataCollector.csproj.GenerateResource.Cache
