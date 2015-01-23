@@ -54,3 +54,6 @@ C:\Users\c.winkler.ASTHM\SkyDrive\Documents\Ange\LocoTools\Source\LocoDataCollec
 C:\Users\c.winkler.ASTHM\SkyDrive\Documents\Ange\LocoTools\Source\LocoDataCollector\obj\x86\Release\LocoDataCollector.Form1.resources
 C:\Users\c.winkler.ASTHM\SkyDrive\Documents\Ange\LocoTools\Source\LocoDataCollector\obj\x86\Release\LocoDataCollector.Properties.Resources.resources
 C:\Users\c.winkler.ASTHM\SkyDrive\Documents\Ange\LocoTools\Source\LocoDataCollector\obj\x86\Release\LocoDataCollector.csproj.GenerateResource.Cache
+C:\Projects\Loco.Collection\LocoDataCollector\bin\Release\LocoDataCollector.exe.config
+C:\Projects\Loco.Collection\LocoDataCollector\obj\x86\Release\LocoDataCollector.exe
+C:\Projects\Loco.Collection\LocoDataCollector\obj\x86\Release\LocoDataCollector.pdb

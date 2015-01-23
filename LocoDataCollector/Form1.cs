@@ -12,11 +12,11 @@ namespace LocoDataCollector
     
     partial class Form1 : Form
     {
-        protected static int CancelIndex = -1;
-        protected MFDeploy MDeploy = new MFDeploy();
-        protected MFDevice MDevice = null;
-        protected static string[] EnclosureOutput = { "00000000", "00000000", "00000000", "00000000", "00000000" };
-        protected static Logger[] EnclosureLogger = { new Logger(1), new Logger(2), new Logger(3), new Logger(4), new Logger(5) };
+        readonly UsbManager _usbManager = new UsbManager();
+        static int _cancelIndex = -1;
+        
+        static string[] EnclosureOutput = { "00000000", "00000000", "00000000", "00000000", "00000000" };
+        static Logger[] EnclosureLogger = { new Logger(1), new Logger(2), new Logger(3), new Logger(4), new Logger(5) };
 
         #region USB Handling
 
@@ -43,16 +43,10 @@ namespace LocoDataCollector
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            GeneratePortList();
+            _usbManager.GeneratePortList();
         }
 
-        private void GeneratePortList()
-        {
-            var list = MDeploy.EnumPorts(TransportType.USB);
-            ddlDevices.DataSource = null;
-            if (list.Count > 0) ddlDevices.DataSource = list;
-            ddlDevices.Update();
-        }
+
 
         private void ConnectToDevice()
         {
@@ -62,9 +56,9 @@ namespace LocoDataCollector
             }
             else
             {
-                if (ddlDevices.SelectedIndex >= 0)
+                if (deviceList.SelectedIndex >= 0)
                 {
-                    var port = (MFPortDefinition)ddlDevices.SelectedItem;
+                    var port = (MFPortDefinition)deviceList.SelectedItem;
                     try
                     {
                         MDevice = MDeploy.Connect(port, null);
@@ -113,13 +107,13 @@ namespace LocoDataCollector
 
         private void RemoveFromList(int encNum)
         {
-            for (int count = 0; count < lboxLogStatus.Items.Count; count++)
+            for (int count = 0; count < logConsole.Items.Count; count++)
             {
-                var split = lboxLogStatus.Items[count].ToString().Split(' ');
+                var split = logConsole.Items[count].ToString().Split(' ');
                 if (split[0].Contains("0" + encNum))
                 {
                     var count1 = count;
-                    lboxLogStatus.Invoke((MethodInvoker)(() => lboxLogStatus.Items.RemoveAt(count1)));
+                    logConsole.Invoke((MethodInvoker)(() => logConsole.Items.RemoveAt(count1)));
                     //console.AppendText("RemoveAt: " + count + "\n");
                 }
             }
@@ -212,7 +206,7 @@ namespace LocoDataCollector
                         if (EnclosureOutput[count].Substring(7, 1).Equals("1"))
                         {
                             monitor.AppendText("Enclosure0" + (count + 1) + "\n");
-                            monitor.AppendText(GenerateOutputString(EnclosureOutput[count]), rearColor);
+                            monitor.AppendTextAsync(GenerateOutputString(EnclosureOutput[count]), rearColor);
                         }
                         else monitor.AppendText("Enclosure0" + (count + 1) + "\n" + GenerateOutputString(EnclosureOutput[count]));
                     }
@@ -263,10 +257,10 @@ namespace LocoDataCollector
 
         private void btCancelLogging_Click(object sender, EventArgs e)
         {
-            if (lboxLogStatus.SelectedIndex > -1)
+            if (logConsole.SelectedIndex > -1)
             {
-                CancelIndex = lboxLogStatus.SelectedIndex;
-                lboxLogStatus.Enabled = false;
+                _cancelIndex = logConsole.SelectedIndex;
+                logConsole.Enabled = false;
                 btCancelLogging.Enabled = false;
                 btCancelRequest.Visible = true;
                 cbConfirmCancel.Visible = true;
@@ -283,11 +277,11 @@ namespace LocoDataCollector
             btCancelRequest.Visible = false;
             cbConfirmCancel.Checked = false;
             cbConfirmCancel.Visible = false;
-            var split = lboxLogStatus.Items[CancelIndex].ToString().Split(' ');
+            var split = logConsole.Items[_cancelIndex].ToString().Split(' ');
             var encNum = GetEnclosureNumber(split[0]);
             EnclosureLogger[encNum].EndLog();
-            lboxLogStatus.Items.RemoveAt(lboxLogStatus.SelectedIndex);
-            lboxLogStatus.Enabled = true;
+            logConsole.Items.RemoveAt(logConsole.SelectedIndex);
+            logConsole.Enabled = true;
             btConfirmRequest.Visible = false;
             btCancelRequest.Enabled = true;
             btCancelLogging.Enabled = true;
@@ -300,7 +294,7 @@ namespace LocoDataCollector
             cbConfirmCancel.Checked = false;
             cbConfirmCancel.Visible = false;
             btConfirmRequest.Visible = false;
-            lboxLogStatus.Enabled = true;
+            logConsole.Enabled = true;
         }
 
         private void btErrorClear_Click(object sender, EventArgs e)
@@ -332,27 +326,11 @@ namespace LocoDataCollector
                 else
                 {
                     EnclosureLogger[ddlItem].StartLog(hours, minutes);
-                    lboxLogStatus.Items.Add(EnclosureLogger[ddlItem].ToString());
+                    logConsole.Items.Add(EnclosureLogger[ddlItem].ToString());
                 }
 
             }
 
         }
-    }
-
-    #region RichTextBox Extension
-    public static class RichTextBoxExtensions
-    {
-        public static void AppendText(this RichTextBox box, string text, Color color)
-        {
-            box.SelectionStart = box.TextLength;
-            box.SelectionLength = 0;
-
-            box.SelectionColor = color;
-            box.AppendText(text);
-            box.SelectionColor = box.ForeColor;
-        }
-    }
-    #endregion
-    
+    }   
 }

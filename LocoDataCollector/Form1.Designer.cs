@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ddlDevices = new System.Windows.Forms.ComboBox();
+            this.deviceList = new System.Windows.Forms.ComboBox();
             this.lblUSB = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.console = new System.Windows.Forms.RichTextBox();
@@ -60,21 +60,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbLogMinutes = new System.Windows.Forms.TextBox();
             this.tbLogHours = new System.Windows.Forms.TextBox();
-            this.lboxLogStatus = new System.Windows.Forms.ListBox();
+            this.logConsole = new System.Windows.Forms.ListBox();
             this.gbListen = new System.Windows.Forms.GroupBox();
             this.gbSettings.SuspendLayout();
             this.gbLogging.SuspendLayout();
             this.gbListen.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ddlDevices
+            // deviceList
             // 
-            this.ddlDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlDevices.FormattingEnabled = true;
-            this.ddlDevices.Location = new System.Drawing.Point(112, 12);
-            this.ddlDevices.Name = "ddlDevices";
-            this.ddlDevices.Size = new System.Drawing.Size(179, 21);
-            this.ddlDevices.TabIndex = 0;
+            this.deviceList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deviceList.FormattingEnabled = true;
+            this.deviceList.Location = new System.Drawing.Point(112, 12);
+            this.deviceList.Name = "deviceList";
+            this.deviceList.Size = new System.Drawing.Size(179, 21);
+            this.deviceList.TabIndex = 0;
             // 
             // lblUSB
             // 
@@ -245,7 +245,7 @@
             this.gbLogging.Controls.Add(this.label1);
             this.gbLogging.Controls.Add(this.tbLogMinutes);
             this.gbLogging.Controls.Add(this.tbLogHours);
-            this.gbLogging.Controls.Add(this.lboxLogStatus);
+            this.gbLogging.Controls.Add(this.logConsole);
             this.gbLogging.Location = new System.Drawing.Point(66, 19);
             this.gbLogging.Name = "gbLogging";
             this.gbLogging.Size = new System.Drawing.Size(375, 244);
@@ -400,13 +400,13 @@
             this.tbLogHours.Size = new System.Drawing.Size(24, 20);
             this.tbLogHours.TabIndex = 12;
             // 
-            // lboxLogStatus
+            // logConsole
             // 
-            this.lboxLogStatus.FormattingEnabled = true;
-            this.lboxLogStatus.Location = new System.Drawing.Point(10, 42);
-            this.lboxLogStatus.Name = "lboxLogStatus";
-            this.lboxLogStatus.Size = new System.Drawing.Size(245, 108);
-            this.lboxLogStatus.TabIndex = 11;
+            this.logConsole.FormattingEnabled = true;
+            this.logConsole.Location = new System.Drawing.Point(10, 42);
+            this.logConsole.Name = "logConsole";
+            this.logConsole.Size = new System.Drawing.Size(245, 108);
+            this.logConsole.TabIndex = 11;
             // 
             // gbListen
             // 
@@ -426,7 +426,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 587);
+            this.ClientSize = new System.Drawing.Size(635, 586);
             this.Controls.Add(this.gbSettings);
             this.Controls.Add(this.lbSettings);
             this.Controls.Add(this.cbDebug);
@@ -435,7 +435,7 @@
             this.Controls.Add(this.console);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.lblUSB);
-            this.Controls.Add(this.ddlDevices);
+            this.Controls.Add(this.deviceList);
             this.MaximumSize = new System.Drawing.Size(651, 625);
             this.MinimumSize = new System.Drawing.Size(651, 625);
             this.Name = "Form1";
@@ -455,7 +455,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox ddlDevices;
+        private System.Windows.Forms.ComboBox deviceList;
         private System.Windows.Forms.Label lblUSB;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.RichTextBox console;
@@ -486,7 +486,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbLogMinutes;
         private System.Windows.Forms.TextBox tbLogHours;
-        private System.Windows.Forms.ListBox lboxLogStatus;
+        private System.Windows.Forms.ListBox logConsole;
         private System.Windows.Forms.Button btErrorClear;
         private System.Windows.Forms.Label lbErrorMsg;
     }
