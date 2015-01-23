@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
 using _DBG = Microsoft.SPOT.Debugger;
 
 namespace LocoDataCollector
@@ -43,67 +42,13 @@ namespace LocoDataCollector
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            _usbManager.GeneratePortList();
-        }
-
-
-
-        private void ConnectToDevice()
-        {
-            if (MDevice != null)
-            {
-                // Already connected to a device.
-            }
-            else
-            {
-                if (deviceList.SelectedIndex >= 0)
-                {
-                    var port = (MFPortDefinition)deviceList.SelectedItem;
-                    try
-                    {
-                        MDevice = MDeploy.Connect(port, null);
-                        if (MDevice != null)
-                        {
-                            MDevice.OnDebugText += InputHandler;
-                            btnConnect.Text = @"Disconnect";
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        AddText("Unexpected error: " + e.Message);
-                    }
-                }
-            }
-        }
-
-        private void DisconnectFromDevice()
-        {
-            if (MDevice != null)
-            {
-                MDevice.OnDebugText -= InputHandler;
-                MDevice.Dispose();
-                MDevice = null;
-                AddText("Disconnected from device.");
-                btnConnect.Text = @"Connect";
-            }
+            _usbManager.GeneratePortListAsync(deviceList);
         }
 
         #endregion
 
         #region FEZ Output Handling
-        private void InputHandler(object sender, DebugOutputEventArgs e)
-        {
 
-            if (e.Text.Contains("Enclosure"))
-            {
-                if (EnclosureLogger[GetEnclosureNumber(e.Text)].IsLogging()) EnclosureLogger[GetEnclosureNumber(e.Text)].LogData(e.Text);
-                AddText(e.Text);
-                if (!EnclosureLogger[GetEnclosureNumber(e.Text)].IsLogging())
-                {
-                    RemoveFromList(GetEnclosureNumber(e.Text) + 1);
-                }
-            }
-        }
 
         private void RemoveFromList(int encNum)
         {
@@ -165,22 +110,34 @@ namespace LocoDataCollector
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (btnConnect.Text.Equals("Connect")) ConnectToDevice();
-            else DisconnectFromDevice();
+            var connected = btnConnect.Text.Equals("disconnect", StringComparison.InvariantCultureIgnoreCase);
+
+            if (connected)
+            {
+                _usbManager.DisconnectFromDevice();
+                AddText("Disconnected from device");
+                btnConnect.Text = @"Connect";
+                return;
+            }
+            try
+            {
+                var result = _usbManager.ConnectToDevice(deviceList);
+                if (!result.Result)
+                {
+                    AddText("Failed to connect to device");
+                    return;
+                }
+                btnConnect.Text = @"Connect";
+            }
+            catch (Exception ex)
+            {
+                AddText("An unexpected error occurred while attempting to connnect: " + ex.Message);
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MDevice != null)
-            {
-                MDevice.Dispose();
-                MDevice = null;
-            }
-            if (MDeploy != null)
-            {
-                MDeploy.Dispose();
-                MDeploy = null;
-            }
+            _usbManager.DisconnectFromDevice();
         }
 
         private void DisplayOutput(string output)

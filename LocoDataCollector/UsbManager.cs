@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
 
@@ -27,14 +26,13 @@ namespace LocoDataCollector
             return _mDevice != null;
         }
 
-        public bool DisconnectFromDevice()
+        public void DisconnectFromDevice()
         {
             //Already disconnected
-            if (_mDevice == null) return true;
+            if (_mDevice == null) return;
             _mDevice.OnDebugText -= InputHandler;
             _mDevice.Dispose();
             _mDevice = null;
-            return true;
         }
 
         private void InputHandler(object sender, DebugOutputEventArgs e)
