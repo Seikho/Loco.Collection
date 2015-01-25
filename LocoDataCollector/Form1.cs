@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using LocoDataCollector.Usb;
 using _DBG = Microsoft.SPOT.Debugger;
 
 namespace LocoDataCollector
@@ -11,7 +12,7 @@ namespace LocoDataCollector
     
     partial class Form1 : Form
     {
-        readonly UsbManager _usbManager = new UsbManager();
+        readonly DeviceManager _deviceManager = new DeviceManager();
         static int _cancelIndex = -1;
         
         static string[] EnclosureOutput = { "00000000", "00000000", "00000000", "00000000", "00000000" };
@@ -42,7 +43,7 @@ namespace LocoDataCollector
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            _usbManager.GeneratePortListAsync(deviceList);
+            _deviceManager.GeneratePortListAsync(deviceList);
         }
 
         #endregion
@@ -114,14 +115,14 @@ namespace LocoDataCollector
 
             if (connected)
             {
-                _usbManager.DisconnectFromDevice();
+                _deviceManager.DisconnectFromDevice();
                 AddText("Disconnected from device");
                 btnConnect.Text = @"Connect";
                 return;
             }
             try
             {
-                var result = _usbManager.ConnectToDevice(deviceList);
+                var result = _deviceManager.ConnectToDevice(deviceList);
                 if (!result.Result)
                 {
                     AddText("Failed to connect to device");
@@ -137,7 +138,7 @@ namespace LocoDataCollector
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _usbManager.DisconnectFromDevice();
+            _deviceManager.DisconnectFromDevice();
         }
 
         private void DisplayOutput(string output)

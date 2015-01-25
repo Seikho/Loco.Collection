@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace LocoDataCollector.Enclosures
+﻿namespace LocoDataCollector.Enclosures
 {
     interface IEnclosure
     {
+        bool IsLogging { get; set; }
+        BeamState State { get; set; }
         void UpdateBeamStates(string binaryStates);
-         Get
     }
 }
