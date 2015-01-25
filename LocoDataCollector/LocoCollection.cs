@@ -3,29 +3,23 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using LocoDataCollector.Enclosures;
+using LocoDataCollector.Enclosures.Handlers;
 using LocoDataCollector.Usb;
 using _DBG = Microsoft.SPOT.Debugger;
 
 namespace LocoDataCollector
 {
-
-    
-    partial class Form1 : Form
+    partial class LocoCollection : Form
     {
-        readonly DeviceManager _deviceManager = new DeviceManager();
-        static int _cancelIndex = -1;
-        
-        static string[] EnclosureOutput = { "00000000", "00000000", "00000000", "00000000", "00000000" };
-        static Logger[] EnclosureLogger = { new Logger(1), new Logger(2), new Logger(3), new Logger(4), new Logger(5) };
-
+        private readonly DeviceManager _deviceManager; 
         #region USB Handling
 
-        public Form1()
+        public LocoCollection()
         {
             try
             {
-                InitializeComponent();
-                
+                _deviceManager = DeviceManager.Instantiate<StandardEnclosure>(new StandardMessageHandler(AddText) );
                 if (!Directory.Exists("c:\\Files")) Directory.CreateDirectory("c:\\Files");
                 if (!Directory.Exists("c:\\Files\\EncData")) Directory.CreateDirectory("c:\\Files\\EncData");
                 if (!Directory.Exists("c:\\Files\\EncData\\1")) Directory.CreateDirectory("c:\\Files\\EncData\\1");
@@ -65,8 +59,10 @@ namespace LocoDataCollector
             }
         }
 
-        private void AddText(string text)
+        private void AddText(EnclosureMessage message)
         {
+            if (_deviceManager[message.Enclosure] == null || !_deviceManager[message.Enclosure].IsLogging) return;
+            var text = message.Message;
             var split = text.Split(' ');
             if ((ListenEnable(split[0])) || (cbDebug.Checked))
             {

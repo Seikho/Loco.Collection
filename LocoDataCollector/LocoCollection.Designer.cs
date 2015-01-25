@@ -1,6 +1,6 @@
 ﻿namespace LocoDataCollector
 {
-    partial class Form1
+    partial class LocoCollection
     {
         /// <summary>
         /// Required designer variable.
@@ -422,7 +422,7 @@
             this.gbListen.TabStop = false;
             this.gbListen.Text = "Listen:";
             // 
-            // Form1
+            // LocoCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -438,7 +438,7 @@
             this.Controls.Add(this.deviceList);
             this.MaximumSize = new System.Drawing.Size(651, 625);
             this.MinimumSize = new System.Drawing.Size(651, 625);
-            this.Name = "Form1";
+            this.Name = "LocoCollection";
             this.Text = "Locomotor Data Collector";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
