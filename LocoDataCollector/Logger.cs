@@ -5,7 +5,7 @@ namespace LocoDataCollector
 {
     public class Logger
     {
-        public bool Logging;
+        public bool IsLogging { get; set; }
         public string Filename = "";
         public int EnclosureNumber, SampleCount, SampleLimit;
         public string Folder = "";
@@ -34,12 +34,7 @@ namespace LocoDataCollector
             }
             Filename = Filename + count + FileExtension;
             Writer = new StreamWriter(GetFullPath(), true);
-            Logging = true;
-        }
-
-        public bool IsLogging()
-        {
-            return Logging;
+            IsLogging = true;
         }
 
         public DateTime GetTime()
@@ -75,7 +70,7 @@ namespace LocoDataCollector
 
         public void EndLog()
         {
-            Logging = false;
+            IsLogging = false;
             if (Writer != null) Writer.Dispose();
         }
 
@@ -85,7 +80,7 @@ namespace LocoDataCollector
             Writer.Write(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + " " + output);
             if (SampleCount == SampleLimit)
             {
-                Logging = false;
+                IsLogging = false;
                 Writer.Dispose();
             }
         }

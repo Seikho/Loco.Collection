@@ -39,7 +39,7 @@
             this.cbListen3 = new System.Windows.Forms.CheckBox();
             this.cbListen4 = new System.Windows.Forms.CheckBox();
             this.cbListen5 = new System.Windows.Forms.CheckBox();
-            this.cbDebug = new System.Windows.Forms.CheckBox();
+            this.isDebugging = new System.Windows.Forms.CheckBox();
             this.lbSettings = new System.Windows.Forms.Label();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.btErrorClear = new System.Windows.Forms.Button();
@@ -176,15 +176,15 @@
             this.cbListen5.Text = "5";
             this.cbListen5.UseVisualStyleBackColor = true;
             // 
-            // cbDebug
+            // isDebugging
             // 
-            this.cbDebug.AutoSize = true;
-            this.cbDebug.Location = new System.Drawing.Point(565, 10);
-            this.cbDebug.Name = "cbDebug";
-            this.cbDebug.Size = new System.Drawing.Size(58, 17);
-            this.cbDebug.TabIndex = 15;
-            this.cbDebug.Text = "Debug";
-            this.cbDebug.UseVisualStyleBackColor = true;
+            this.isDebugging.AutoSize = true;
+            this.isDebugging.Location = new System.Drawing.Point(565, 10);
+            this.isDebugging.Name = "isDebugging";
+            this.isDebugging.Size = new System.Drawing.Size(58, 17);
+            this.isDebugging.TabIndex = 15;
+            this.isDebugging.Text = "Debug";
+            this.isDebugging.UseVisualStyleBackColor = true;
             // 
             // lbSettings
             // 
@@ -429,7 +429,7 @@
             this.ClientSize = new System.Drawing.Size(635, 586);
             this.Controls.Add(this.gbSettings);
             this.Controls.Add(this.lbSettings);
-            this.Controls.Add(this.cbDebug);
+            this.Controls.Add(this.isDebugging);
             this.Controls.Add(this.monitor);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.console);
@@ -466,7 +466,7 @@
         private System.Windows.Forms.CheckBox cbListen3;
         private System.Windows.Forms.CheckBox cbListen4;
         private System.Windows.Forms.CheckBox cbListen5;
-        private System.Windows.Forms.CheckBox cbDebug;
+        private System.Windows.Forms.CheckBox isDebugging;
         private System.Windows.Forms.Label lbSettings;
         private System.Windows.Forms.GroupBox gbSettings;
         private System.Windows.Forms.GroupBox gbListen;

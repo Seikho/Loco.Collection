@@ -3,23 +3,25 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using LocoDataCollector.DeviceManager;
 using LocoDataCollector.Enclosures;
 using LocoDataCollector.Enclosures.Handlers;
-using LocoDataCollector.Usb;
 using _DBG = Microsoft.SPOT.Debugger;
-
 namespace LocoDataCollector
 {
     partial class LocoCollection : Form
     {
-        private readonly DeviceManager _deviceManager; 
+        private readonly IDeviceManager _deviceManager;
+        private bool IsDebugging { get { return isDebugging.Checked; } }
+        private int _cancelIndex = -1;
+
         #region USB Handling
 
         public LocoCollection()
         {
             try
             {
-                _deviceManager = DeviceManager.Instantiate<StandardEnclosure>(new StandardMessageHandler(AddText) );
+                _deviceManager = new DeviceManager<StandardEnclosure>(new StandardMessageHandler(AddText));
                 if (!Directory.Exists("c:\\Files")) Directory.CreateDirectory("c:\\Files");
                 if (!Directory.Exists("c:\\Files\\EncData")) Directory.CreateDirectory("c:\\Files\\EncData");
                 if (!Directory.Exists("c:\\Files\\EncData\\1")) Directory.CreateDirectory("c:\\Files\\EncData\\1");
@@ -59,16 +61,21 @@ namespace LocoDataCollector
             }
         }
 
+        private void AddText(string text)
+        {
+            console.AppendText(text);
+        }
+
         private void AddText(EnclosureMessage message)
         {
             if (_deviceManager[message.Enclosure] == null || !_deviceManager[message.Enclosure].IsLogging) return;
             var text = message.Message;
             var split = text.Split(' ');
-            if ((ListenEnable(split[0])) || (cbDebug.Checked))
+            if ((ListenEnable(split[0])) || (isDebugging.Checked))
             {
                 console.Invoke((MethodInvoker)delegate
                 {
-                    if (cbDebug.Checked)
+                    if (isDebugging.Checked)
                     {
                         console.AppendText("[DEBUG] " + text);
                         console.ScrollToCaret();
@@ -83,15 +90,11 @@ namespace LocoDataCollector
             }
         }
 
-        private static int GetEnclosureNumber(string output)
+        private int GetEnclosureNumber(string output)
         {
-            int enc;
-            if (output.Contains("Enclosure01")) enc = 0;
-            else if (output.Contains("Enclosure02")) enc = 1;
-            else if (output.Contains("Enclosure03")) enc = 2;
-            else if (output.Contains("Enclosure04")) enc = 3;
-            else enc = 4;
-            return enc;
+            int enclosureId;
+            int.TryParse(output.Replace("Enclosure0",""), out enclosureId);
+            return enclosureId;
         }
 
         private bool ListenEnable(string enclosure)
@@ -105,6 +108,7 @@ namespace LocoDataCollector
             return listen;
         }
 
+        // Refactored
         private void btnConnect_Click(object sender, EventArgs e)
         {
             var connected = btnConnect.Text.Equals("disconnect", StringComparison.InvariantCultureIgnoreCase);
