@@ -57,3 +57,4 @@ C:\Users\c.winkler.ASTHM\SkyDrive\Documents\Ange\LocoTools\Source\LocoDataCollec
 C:\Projects\Loco.Collection\LocoDataCollector\bin\Release\LocoDataCollector.exe.config
 C:\Projects\Loco.Collection\LocoDataCollector\obj\x86\Release\LocoDataCollector.exe
 C:\Projects\Loco.Collection\LocoDataCollector\obj\x86\Release\LocoDataCollector.pdb
+C:\Projects\Loco.Collection\LocoDataCollector\bin\Release\Loco.Collection.exe.config

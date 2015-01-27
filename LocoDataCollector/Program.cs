@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace LocoDataCollector
+namespace Loco.Collection
 {
     static class Program
     {

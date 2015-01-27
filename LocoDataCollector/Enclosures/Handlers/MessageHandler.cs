@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LocoDataCollector.Enclosures.Handlers
+namespace Loco.Collection.Enclosures.Handlers
 {
     internal abstract class MessageHandler : IMessageHandler
     {

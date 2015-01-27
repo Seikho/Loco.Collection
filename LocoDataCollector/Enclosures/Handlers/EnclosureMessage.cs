@@ -1,4 +1,4 @@
-﻿namespace LocoDataCollector.Enclosures.Handlers
+﻿namespace Loco.Collection.Enclosures.Handlers
 {
     struct EnclosureMessage
     {

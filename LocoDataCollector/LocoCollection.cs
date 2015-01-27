@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using LocoDataCollector.DeviceManager;
-using LocoDataCollector.Enclosures;
-using LocoDataCollector.Enclosures.Handlers;
-using _DBG = Microsoft.SPOT.Debugger;
-namespace LocoDataCollector
+using Loco.Collection.DeviceManager;
+using Loco.Collection.Enclosures;
+using Loco.Collection.Enclosures.Handlers;
+using Loco.Collection.Loggers;
+
+namespace Loco.Collection
 {
     partial class LocoCollection : Form
     {
-        private readonly IDeviceManager _deviceManager;
+        private ILogger Logger { get; set; }
+        private IDeviceManager DeviceManager { get; set; }
         private bool IsDebugging { get { return isDebugging.Checked; } }
         private int _cancelIndex = -1;
-
-        #region USB Handling
 
         public LocoCollection()
         {
             try
             {
-                _deviceManager = new DeviceManager<StandardEnclosure>(new StandardMessageHandler(AddText));
+                DeviceManager = new DeviceManager<StandardEnclosure>(new StandardMessageHandler(AddText));
                 if (!Directory.Exists("c:\\Files")) Directory.CreateDirectory("c:\\Files");
                 if (!Directory.Exists("c:\\Files\\EncData")) Directory.CreateDirectory("c:\\Files\\EncData");
                 if (!Directory.Exists("c:\\Files\\EncData\\1")) Directory.CreateDirectory("c:\\Files\\EncData\\1");
@@ -39,25 +40,15 @@ namespace LocoDataCollector
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            _deviceManager.GeneratePortListAsync(deviceList);
+            DeviceManager.GeneratePortListAsync(deviceList);
         }
-
-        #endregion
-
-        #region FEZ Output Handling
-
 
         private void RemoveFromList(int encNum)
         {
-            for (int count = 0; count < logConsole.Items.Count; count++)
+            foreach (var item in logConsole.Items)
             {
-                var split = logConsole.Items[count].ToString().Split(' ');
-                if (split[0].Contains("0" + encNum))
-                {
-                    var count1 = count;
-                    logConsole.Invoke((MethodInvoker)(() => logConsole.Items.RemoveAt(count1)));
-                    //console.AppendText("RemoveAt: " + count + "\n");
-                }
+                if (item.ToString().Split(' ').Contains("0" + encNum))
+                    logConsole.Items.Remove(item);
             }
         }
 
@@ -68,7 +59,7 @@ namespace LocoDataCollector
 
         private void AddText(EnclosureMessage message)
         {
-            if (_deviceManager[message.Enclosure] == null || !_deviceManager[message.Enclosure].IsLogging) return;
+            if (DeviceManager[message.Enclosure] == null || !DeviceManager[message.Enclosure].IsLogging) return;
             var text = message.Message;
             var split = text.Split(' ');
             if ((ListenEnable(split[0])) || (isDebugging.Checked))
@@ -115,14 +106,14 @@ namespace LocoDataCollector
 
             if (connected)
             {
-                _deviceManager.DisconnectFromDevice();
+                DeviceManager.DisconnectFromDevice();
                 AddText("Disconnected from device");
                 btnConnect.Text = @"Connect";
                 return;
             }
             try
             {
-                var result = _deviceManager.ConnectToDevice(deviceList);
+                var result = DeviceManager.ConnectToDevice(deviceList);
                 if (!result.Result)
                 {
                     AddText("Failed to connect to device");
@@ -138,7 +129,7 @@ namespace LocoDataCollector
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _deviceManager.DisconnectFromDevice();
+            DeviceManager.DisconnectFromDevice();
         }
 
         private void DisplayOutput(string output)
@@ -211,7 +202,7 @@ namespace LocoDataCollector
         {
             
         }
-        #endregion
+
 
         private void btCancelLogging_Click(object sender, EventArgs e)
         {
@@ -237,7 +228,7 @@ namespace LocoDataCollector
             cbConfirmCancel.Visible = false;
             var split = logConsole.Items[_cancelIndex].ToString().Split(' ');
             var encNum = GetEnclosureNumber(split[0]);
-            EnclosureLogger[encNum].EndLog();
+            //EnclosureLogger[encNum].EndLog();
             logConsole.Items.RemoveAt(logConsole.SelectedIndex);
             logConsole.Enabled = true;
             btConfirmRequest.Visible = false;

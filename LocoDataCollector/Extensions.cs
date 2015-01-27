@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LocoDataCollector
+namespace Loco.Collection
 {
     static class Extensions
     {

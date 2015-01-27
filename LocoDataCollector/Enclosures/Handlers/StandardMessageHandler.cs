@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
 
-namespace LocoDataCollector.Enclosures.Handlers
+namespace Loco.Collection.Enclosures.Handlers
 {
     class StandardMessageHandler : MessageHandler
     {
@@ -11,7 +11,10 @@ namespace LocoDataCollector.Enclosures.Handlers
 
         public override int GetEnclosureId(string message)
         {
-            throw new System.NotImplementedException();
+            var enclosure = message.Split(' ')[0];
+            int id;
+            Int32.TryParse(enclosure.Replace("Enclosure0", ""), out id);
+            return id;
         }
 
         protected override EnclosureMessage ParseMessage(EventArgs eventArgs)

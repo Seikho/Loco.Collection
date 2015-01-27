@@ -1,4 +1,4 @@
-﻿namespace LocoDataCollector
+﻿namespace Loco.Collection
 {
     partial class LocoCollection
     {

@@ -1,4 +1,4 @@
-﻿namespace LocoDataCollector.Enclosures
+﻿namespace Loco.Collection.Enclosures
 {
     class BeamState
     {
@@ -30,6 +30,11 @@
                     _states[c] = 0;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return _state;
         }
     }
 }
