@@ -6,7 +6,7 @@ namespace Loco.Collection.Loggers
     {
         string GetRootDirectory();
         string GetDataDirectory();
-        string CreateDirectories();
+        void CreateDirectories();
         void StartLogging(IEnclosure enclosure);
         void StopLogging(IEnclosure enclosure);
         void Write(IEnclosure enclosure, int enclosureNumber);

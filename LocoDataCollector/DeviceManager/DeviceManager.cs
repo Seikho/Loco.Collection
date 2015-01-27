@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Loco.Collection.Enclosures;
 using Loco.Collection.Enclosures.Handlers;
+using Loco.Collection.Loggers;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
 
 namespace Loco.Collection.DeviceManager
@@ -13,13 +14,15 @@ namespace Loco.Collection.DeviceManager
         private readonly MFDeploy _deploy = new MFDeploy();
         private MFDevice Device { get; set; }
         private IMessageHandler Handler { get; set; }
+        private ILogger Logger { get; set; }
 
         private List<IEnclosure> Enclosures { get; set; }
 
-        public DeviceManager(IMessageHandler handler)
+        public DeviceManager(IMessageHandler handler, ILogger logger)
         {
             Handler = handler;
             Enclosures = new List<IEnclosure>();
+            Logger = logger;
             for (var x = 1; x <= EnclosureCount; x++) Enclosures.Add(new T());
         }
 

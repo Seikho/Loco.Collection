@@ -20,8 +20,8 @@ namespace Loco.Collection.Enclosures.Handlers
         protected override EnclosureMessage ParseMessage(EventArgs eventArgs)
         {
             var args = eventArgs as DebugOutputEventArgs;
-            if (args == null) return new EnclosureMessage{Enclosure = 0, Message = "DebugOutputEventArgs is null"};
-            return new EnclosureMessage{Enclosure = GetEnclosureId(args.Text), Message = args.Text};
+            if (args == null) return new EnclosureMessage{Enclosure = 0, BeamStates = null};
+            return new EnclosureMessage{Enclosure = GetEnclosureId(args.Text), BeamStates = new BeamState(args.Text.Split(' ')[1])};
         }
     }
 }

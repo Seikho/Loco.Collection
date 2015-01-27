@@ -34,11 +34,11 @@
             this.console = new System.Windows.Forms.RichTextBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.monitor = new System.Windows.Forms.RichTextBox();
-            this.cbListen1 = new System.Windows.Forms.CheckBox();
-            this.cbListen2 = new System.Windows.Forms.CheckBox();
-            this.cbListen3 = new System.Windows.Forms.CheckBox();
-            this.cbListen4 = new System.Windows.Forms.CheckBox();
-            this.cbListen5 = new System.Windows.Forms.CheckBox();
+            this.enclosureState1 = new System.Windows.Forms.CheckBox();
+            this.enclosureState2 = new System.Windows.Forms.CheckBox();
+            this.enclosureState3 = new System.Windows.Forms.CheckBox();
+            this.enclosureState4 = new System.Windows.Forms.CheckBox();
+            this.enclosureState5 = new System.Windows.Forms.CheckBox();
             this.isDebugging = new System.Windows.Forms.CheckBox();
             this.lbSettings = new System.Windows.Forms.Label();
             this.gbSettings = new System.Windows.Forms.GroupBox();
@@ -126,55 +126,55 @@
             this.monitor.TabIndex = 8;
             this.monitor.Text = "";
             // 
-            // cbListen1
+            // enclosureState1
             // 
-            this.cbListen1.AutoSize = true;
-            this.cbListen1.Location = new System.Drawing.Point(6, 19);
-            this.cbListen1.Name = "cbListen1";
-            this.cbListen1.Size = new System.Drawing.Size(32, 17);
-            this.cbListen1.TabIndex = 9;
-            this.cbListen1.Text = "1";
-            this.cbListen1.UseVisualStyleBackColor = true;
+            this.enclosureState1.AutoSize = true;
+            this.enclosureState1.Location = new System.Drawing.Point(6, 19);
+            this.enclosureState1.Name = "enclosureState1";
+            this.enclosureState1.Size = new System.Drawing.Size(32, 17);
+            this.enclosureState1.TabIndex = 9;
+            this.enclosureState1.Text = "1";
+            this.enclosureState1.UseVisualStyleBackColor = true;
             // 
-            // cbListen2
+            // enclosureState2
             // 
-            this.cbListen2.AutoSize = true;
-            this.cbListen2.Location = new System.Drawing.Point(6, 42);
-            this.cbListen2.Name = "cbListen2";
-            this.cbListen2.Size = new System.Drawing.Size(32, 17);
-            this.cbListen2.TabIndex = 10;
-            this.cbListen2.Text = "2";
-            this.cbListen2.UseVisualStyleBackColor = true;
+            this.enclosureState2.AutoSize = true;
+            this.enclosureState2.Location = new System.Drawing.Point(6, 42);
+            this.enclosureState2.Name = "enclosureState2";
+            this.enclosureState2.Size = new System.Drawing.Size(32, 17);
+            this.enclosureState2.TabIndex = 10;
+            this.enclosureState2.Text = "2";
+            this.enclosureState2.UseVisualStyleBackColor = true;
             // 
-            // cbListen3
+            // enclosureState3
             // 
-            this.cbListen3.AutoSize = true;
-            this.cbListen3.Location = new System.Drawing.Point(6, 65);
-            this.cbListen3.Name = "cbListen3";
-            this.cbListen3.Size = new System.Drawing.Size(32, 17);
-            this.cbListen3.TabIndex = 11;
-            this.cbListen3.Text = "3";
-            this.cbListen3.UseVisualStyleBackColor = true;
+            this.enclosureState3.AutoSize = true;
+            this.enclosureState3.Location = new System.Drawing.Point(6, 65);
+            this.enclosureState3.Name = "enclosureState3";
+            this.enclosureState3.Size = new System.Drawing.Size(32, 17);
+            this.enclosureState3.TabIndex = 11;
+            this.enclosureState3.Text = "3";
+            this.enclosureState3.UseVisualStyleBackColor = true;
             // 
-            // cbListen4
+            // enclosureState4
             // 
-            this.cbListen4.AutoSize = true;
-            this.cbListen4.Location = new System.Drawing.Point(6, 88);
-            this.cbListen4.Name = "cbListen4";
-            this.cbListen4.Size = new System.Drawing.Size(32, 17);
-            this.cbListen4.TabIndex = 12;
-            this.cbListen4.Text = "4";
-            this.cbListen4.UseVisualStyleBackColor = true;
+            this.enclosureState4.AutoSize = true;
+            this.enclosureState4.Location = new System.Drawing.Point(6, 88);
+            this.enclosureState4.Name = "enclosureState4";
+            this.enclosureState4.Size = new System.Drawing.Size(32, 17);
+            this.enclosureState4.TabIndex = 12;
+            this.enclosureState4.Text = "4";
+            this.enclosureState4.UseVisualStyleBackColor = true;
             // 
-            // cbListen5
+            // enclosureState5
             // 
-            this.cbListen5.AutoSize = true;
-            this.cbListen5.Location = new System.Drawing.Point(6, 111);
-            this.cbListen5.Name = "cbListen5";
-            this.cbListen5.Size = new System.Drawing.Size(32, 17);
-            this.cbListen5.TabIndex = 13;
-            this.cbListen5.Text = "5";
-            this.cbListen5.UseVisualStyleBackColor = true;
+            this.enclosureState5.AutoSize = true;
+            this.enclosureState5.Location = new System.Drawing.Point(6, 111);
+            this.enclosureState5.Name = "enclosureState5";
+            this.enclosureState5.Size = new System.Drawing.Size(32, 17);
+            this.enclosureState5.TabIndex = 13;
+            this.enclosureState5.Text = "5";
+            this.enclosureState5.UseVisualStyleBackColor = true;
             // 
             // isDebugging
             // 
@@ -410,11 +410,11 @@
             // 
             // gbListen
             // 
-            this.gbListen.Controls.Add(this.cbListen1);
-            this.gbListen.Controls.Add(this.cbListen2);
-            this.gbListen.Controls.Add(this.cbListen3);
-            this.gbListen.Controls.Add(this.cbListen5);
-            this.gbListen.Controls.Add(this.cbListen4);
+            this.gbListen.Controls.Add(this.enclosureState1);
+            this.gbListen.Controls.Add(this.enclosureState2);
+            this.gbListen.Controls.Add(this.enclosureState3);
+            this.gbListen.Controls.Add(this.enclosureState5);
+            this.gbListen.Controls.Add(this.enclosureState4);
             this.gbListen.Location = new System.Drawing.Point(6, 19);
             this.gbListen.Name = "gbListen";
             this.gbListen.Size = new System.Drawing.Size(54, 134);
@@ -461,11 +461,11 @@
         private System.Windows.Forms.RichTextBox console;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.RichTextBox monitor;
-        private System.Windows.Forms.CheckBox cbListen1;
-        private System.Windows.Forms.CheckBox cbListen2;
-        private System.Windows.Forms.CheckBox cbListen3;
-        private System.Windows.Forms.CheckBox cbListen4;
-        private System.Windows.Forms.CheckBox cbListen5;
+        private System.Windows.Forms.CheckBox enclosureState1;
+        private System.Windows.Forms.CheckBox enclosureState2;
+        private System.Windows.Forms.CheckBox enclosureState3;
+        private System.Windows.Forms.CheckBox enclosureState4;
+        private System.Windows.Forms.CheckBox enclosureState5;
         private System.Windows.Forms.CheckBox isDebugging;
         private System.Windows.Forms.Label lbSettings;
         private System.Windows.Forms.GroupBox gbSettings;

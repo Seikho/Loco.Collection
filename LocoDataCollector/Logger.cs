@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace LocoDataCollector
+namespace Loco.Collection
 {
     public class Logger
     {

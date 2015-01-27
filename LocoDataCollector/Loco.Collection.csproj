@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="DeviceManager\DeviceManager.cs" />
     <Compile Include="DeviceManager\IDeviceManager.cs" />
+    <Compile Include="DeviceManager\MockManager.cs" />
     <Compile Include="Enclosures\BeamState.cs" />
     <Compile Include="Enclosures\Handlers\EnclosureMessage.cs" />
     <Compile Include="Enclosures\Handlers\IMessageHandler.cs" />
@@ -75,6 +76,7 @@
     </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Loggers\ILogger.cs" />
+    <Compile Include="Loggers\StandardLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="LocoCollection.resx">

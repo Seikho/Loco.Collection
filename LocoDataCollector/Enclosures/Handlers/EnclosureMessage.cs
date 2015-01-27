@@ -3,6 +3,6 @@
     struct EnclosureMessage
     {
         public int Enclosure { get; set; }
-        public string Message { get; set; }
+        public BeamState BeamStates { get; set; }
     }
 }

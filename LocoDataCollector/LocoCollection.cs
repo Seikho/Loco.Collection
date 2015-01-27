@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -13,29 +13,18 @@ namespace Loco.Collection
 {
     partial class LocoCollection : Form
     {
-        private ILogger Logger { get; set; }
         private IDeviceManager DeviceManager { get; set; }
         private bool IsDebugging { get { return isDebugging.Checked; } }
         private int _cancelIndex = -1;
-
+        private readonly Dictionary<int, CheckBox> _enclosureStates = new Dictionary<int, CheckBox>();
         public LocoCollection()
         {
-            try
-            {
-                DeviceManager = new DeviceManager<StandardEnclosure>(new StandardMessageHandler(AddText));
-                if (!Directory.Exists("c:\\Files")) Directory.CreateDirectory("c:\\Files");
-                if (!Directory.Exists("c:\\Files\\EncData")) Directory.CreateDirectory("c:\\Files\\EncData");
-                if (!Directory.Exists("c:\\Files\\EncData\\1")) Directory.CreateDirectory("c:\\Files\\EncData\\1");
-                if (!Directory.Exists("c:\\Files\\EncData\\2")) Directory.CreateDirectory("c:\\Files\\EncData\\2");
-                if (!Directory.Exists("c:\\Files\\EncData\\3")) Directory.CreateDirectory("c:\\Files\\EncData\\3");
-                if (!Directory.Exists("c:\\Files\\EncData\\4")) Directory.CreateDirectory("c:\\Files\\EncData\\4");
-                if (!Directory.Exists("c:\\Files\\EncData\\5")) Directory.CreateDirectory("c:\\Files\\EncData\\5");
-                console.AppendText("All files are saved to: C:\\Files\\EncData\\\n");
-            }
-            catch (Exception e)
-            {
-                console.AppendText(e.Message + "\n");
-            }
+            DeviceManager = new DeviceManager<StandardEnclosure>(new StandardMessageHandler(AddText), new StandardLogger());
+            _enclosureStates[1] = enclosureState1;
+            _enclosureStates[2] = enclosureState2;
+            _enclosureStates[3] = enclosureState3;
+            _enclosureStates[4] = enclosureState4;
+            _enclosureStates[5] = enclosureState5;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -59,25 +48,23 @@ namespace Loco.Collection
 
         private void AddText(EnclosureMessage message)
         {
-            if (DeviceManager[message.Enclosure] == null || !DeviceManager[message.Enclosure].IsLogging) return;
-            var text = message.Message;
-            var split = text.Split(' ');
-            if ((ListenEnable(split[0])) || (isDebugging.Checked))
+            if (DeviceManager[message.Enclosure] == null) return;
+            var text = message.BeamStates;
+            if ((IsEnclosureEnabled(message.Enclosure)) || (IsDebugging))
             {
-                console.Invoke((MethodInvoker)delegate
+                if (IsDebugging)
                 {
-                    if (isDebugging.Checked)
-                    {
-                        console.AppendText("[DEBUG] " + text);
-                        console.ScrollToCaret();
-                    }
-                    else
-                    {
-                        console.AppendText("[" + DateTime.Now.ToLongTimeString() + " " + DateTime.Now.ToShortDateString() + "] " + text);
-                        console.ScrollToCaret();
-                        DisplayOutput(text);
-                    }
-                });
+                    console.AppendText("[DEBUG] " + text);
+                    console.ScrollToCaret();
+                }
+                else
+                {
+                    var toAppend = String.Format("[{0} {1}] {2}", DateTime.Now.ToLongTimeString(),
+                        DateTime.Now.ToShortDateString(), text);
+                    console.AppendText(toAppend);
+                    console.ScrollToCaret();
+                    DisplayOutput(text);
+                }
             }
         }
 
@@ -87,16 +74,16 @@ namespace Loco.Collection
             int.TryParse(output.Replace("Enclosure0",""), out enclosureId);
             return enclosureId;
         }
-
-        private bool ListenEnable(string enclosure)
+        /// <summary>
+        /// Return the user-selected listening state of a particular enclosure.
+        /// </summary>
+        /// <param name="enclosureNumber">Enclosure number as received from the microcontroller.</param>
+        /// <returns></returns>
+        private bool IsEnclosureEnabled(int enclosureNumber)
         {
-            bool listen;
-            if (enclosure.Contains("01")) listen = cbListen1.Checked;
-            else if (enclosure.Contains("02")) listen = cbListen2.Checked;
-            else if (enclosure.Contains("03")) listen = cbListen3.Checked;
-            else if (enclosure.Contains("04")) listen = cbListen4.Checked;
-            else listen = cbListen5.Checked;
-            return listen;
+            if (!_enclosureStates.ContainsKey(enclosureNumber))
+                return false;
+            return _enclosureStates[enclosureNumber].Checked;
         }
 
         // Refactored
@@ -134,37 +121,40 @@ namespace Loco.Collection
 
         private void DisplayOutput(string output)
         {
-            monitor.Invoke((MethodInvoker)delegate
+            var rearColor = Color.Red;
+            monitor.Clear();
+            var split = output.Split(' ');
+            if (split.Length != 2) return;
+
+            output = split[1];
+            output = output.Replace(" ", string.Empty).Substring(0, 8);
+
+            if (output.Length != 8) return;
+            EnclosureOutput[GetEnclosureNumber(split[0])] = output;
+            monitor.Clear();
+            CheckBox[] displayList =
             {
-                var rearColor = Color.Red;
-                monitor.Clear();
-                var split = output.Split(' ');
-                if (split.Length != 2) return;
-            
-                output = split[1];
-                output = output.Replace(" ", string.Empty).Substring(0, 8);
-                
-                if (output.Length != 8) return;
-                EnclosureOutput[GetEnclosureNumber(split[0])] = output;
-                monitor.Clear();
-                CheckBox[] displayList = { cbListen1, cbListen2, cbListen3, cbListen4, cbListen5 };
-                for (var count = 0; count <= 4; count++)
+                enclosureState1, enclosureState2, enclosureState3, enclosureState4,
+                enclosureState5
+            };
+            for (var count = 0; count <= 4; count++)
+            {
+                if (displayList[count].Checked)
                 {
-                    if (displayList[count].Checked)
+                    if (EnclosureOutput[count].Substring(7, 1).Equals("1"))
                     {
-                        if (EnclosureOutput[count].Substring(7, 1).Equals("1"))
-                        {
-                            monitor.AppendText("Enclosure0" + (count + 1) + "\n");
-                            monitor.AppendTextAsync(GenerateOutputString(EnclosureOutput[count]), rearColor);
-                        }
-                        else monitor.AppendText("Enclosure0" + (count + 1) + "\n" + GenerateOutputString(EnclosureOutput[count]));
+                        monitor.AppendText("Enclosure0" + (count + 1) + "\n");
+                        monitor.AppendTextAsync(GenerateOutputString(EnclosureOutput[count]), rearColor);
                     }
+                    else
+                        monitor.AppendText("Enclosure0" + (count + 1) + "\n" +
+                                           GenerateOutputString(EnclosureOutput[count]));
                 }
-                foreach (var line in EnclosureOutput)
-                {
-                    monitor.AppendText(line + "\n");
-                }
-            });
+            }
+            foreach (var line in EnclosureOutput)
+            {
+                monitor.AppendText(line + "\n");
+            }
         }
 
         private string GenerateOutputString(string output)
